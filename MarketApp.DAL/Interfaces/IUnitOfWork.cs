@@ -7,9 +7,9 @@ namespace MarketApp.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Shop> Shops { get; }
+        IShopRepository Shops { get; }
 
-        IRepository<Product> Products { get; }
+        IProductRepository Products { get; }
 
         void Save();
     }

@@ -1,41 +1,42 @@
-﻿using MarketApp.DAL.Entities;
+﻿using MarketApp.DAL.EF;
+using MarketApp.DAL.Entities;
 using MarketApp.DAL.Interfaces;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace MarketApp.DAL.Repositories
 {
-    class ProductRepository : IRepository<Product>
+    class ProductRepository : IProductRepository
     {
-        public void Create(Product item)
+        private readonly MarketAppContext db;
+        public ProductRepository(MarketAppContext db)
         {
-            throw new NotImplementedException();
+            this.db = db;
+        }
+        public void Create(Product product)
+        {
+            db.Add(product);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Product product = db.Products.Find(id);
+
+            if (product != null)
+            {
+                db.Products.Remove(product);
+            }
         }
 
-        public IEnumerable<Product> Find(Func<Product, bool> predicate)
+        public IEnumerable<Product> GetProductsFromShop(Shop shop)
         {
-            throw new NotImplementedException();
+            return db.Products.Where(p => p.ShopId == shop.Id);
         }
 
-        public IEnumerable<Product> GetAll()
+        public void Update(Product product)
         {
-            throw new NotImplementedException();
-        }
-
-        public Product GetOneById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Product item)
-        {
-            throw new NotImplementedException();
+            db.Entry(product).State = EntityState.Modified;
         }
     }
 }

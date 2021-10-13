@@ -1,25 +1,44 @@
-﻿using MarketApp.DAL.Entities;
+﻿using MarketApp.DAL.EF;
 using MarketApp.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MarketApp.DAL.Repositories
 {
     class EFUnitOfWork : IUnitOfWork
     {
-        public IRepository<Shop> Shops => throw new NotImplementedException();
+        private readonly MarketAppContext db;        
+        private ShopRepository shopRepository;
+        private ProductRepository productRepository;
+        public IShopRepository Shops
+        {
+            get
+            {
+                if (shopRepository is null)
+                {
+                    shopRepository = new ShopRepository(db);
+                }
+                return shopRepository;
+            }
+        }
 
-        public IRepository<Product> Products => throw new NotImplementedException();
-
+        public IProductRepository Products
+        {
+            get
+            {
+                if (productRepository is null)
+                {
+                    productRepository = new ProductRepository(db);
+                }
+                return productRepository;
+            }
+        }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            db.Dispose();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            db.SaveChanges();
         }
     }
 }
