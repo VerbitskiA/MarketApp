@@ -3,11 +3,15 @@ using MarketApp.DAL.Interfaces;
 
 namespace MarketApp.DAL.Repositories
 {
-    class EFUnitOfWork : IUnitOfWork
+    public class EFUnitOfWork : IUnitOfWork
     {
         private readonly MarketAppContext db;        
         private ShopRepository shopRepository;
         private ProductRepository productRepository;
+        public EFUnitOfWork()
+        {
+            this.db = new MarketAppContext();
+        }
         public IShopRepository Shops
         {
             get

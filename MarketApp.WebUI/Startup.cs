@@ -1,3 +1,7 @@
+using MarketApp.BLL.Interfaces;
+using MarketApp.BLL.Services;
+using MarketApp.DAL.Interfaces;
+using MarketApp.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,6 +27,9 @@ namespace MarketAPP.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IShopService, ShopService>();
+            services.AddTransient<IProductService, ProductService>();            
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             services.AddControllersWithViews();
         }
 

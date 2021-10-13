@@ -9,7 +9,7 @@ using System.Text;
 
 namespace MarketApp.BLL.Services
 {
-    class ShopService : IShopService
+    public class ShopService : IShopService
     {
         IUnitOfWork db;
         public ShopService(IUnitOfWork unitOfWork)

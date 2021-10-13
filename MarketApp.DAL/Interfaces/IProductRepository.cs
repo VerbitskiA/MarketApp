@@ -7,7 +7,7 @@ namespace MarketApp.DAL.Interfaces
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetProductsFromShop(Shop shop);
+        IEnumerable<Product> GetProductsFromShop(int shopId);
         void Create(Product product);
         void Update(Product product);
         void Delete(int id);

@@ -29,9 +29,9 @@ namespace MarketApp.DAL.Repositories
             }
         }
 
-        public IEnumerable<Product> GetProductsFromShop(Shop shop)
+        public IEnumerable<Product> GetProductsFromShop(int shopId)
         {
-            return db.Products.Where(p => p.ShopId == shop.Id);
+            return db.Products.Where(p => p.ShopId == shopId);
         }
 
         public void Update(Product product)

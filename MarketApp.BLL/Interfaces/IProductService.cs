@@ -7,6 +7,6 @@ namespace MarketApp.BLL.Interfaces
 {
     public interface IProductService
     {
-        IEnumerable<ProductDTO> GetProductsDTOsFromShop(ShopDTO shopDTO);
+        IEnumerable<ProductDTO> GetProductsDTOsFromShop(int shopId);
     }
 }

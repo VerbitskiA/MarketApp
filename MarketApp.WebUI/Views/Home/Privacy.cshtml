@@ -1,6 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
+@model List<MarketApp.WebUI.Models.ProductViewModel>
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<div>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <p>@Model[i].Id</p>
+        <p>@Model[i].Name</p>
+        <p>@Model[i].Description</p>        
+    }
+</div>
