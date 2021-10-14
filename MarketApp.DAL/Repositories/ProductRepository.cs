@@ -29,6 +29,11 @@ namespace MarketApp.DAL.Repositories
             }
         }
 
+        public Product GetOneById(int id)
+        {
+            return db.Products.Find(id);
+        }
+
         public IEnumerable<Product> GetProductsFromShop(int shopId)
         {
             return db.Products.Where(p => p.ShopId == shopId);

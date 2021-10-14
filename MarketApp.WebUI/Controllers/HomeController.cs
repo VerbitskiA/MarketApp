@@ -37,16 +37,60 @@ namespace MarketAPP.WebUI.Controllers
 
             return View(shops);
         }
-
-        public IActionResult Privacy()
+        public IActionResult GetProducts(int id)
         {
-            IEnumerable<ProductDTO> productDTOs = productService.GetProductsDTOsFromShop(1);
+            IEnumerable<ProductDTO> productDTOs = productService.GetProductsDTOsFromShop(id);
 
             IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
 
             List<ProductViewModel> products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDTOs);
 
             return View(products);
+        }
+
+        public IActionResult DeleteProduct(int id, int shopId)
+        {
+            productService.Delete(id);
+            
+            return RedirectToAction("GetProducts", new { id = shopId });
+        }
+
+        [HttpGet]
+        public IActionResult CreateProduct(int shopId)
+        {
+            ViewBag.ShopId = shopId;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct(ProductViewModel product)
+        {
+
+            IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductViewModel, ProductDTO>()).CreateMapper();
+            productService.Create(mapper.Map<ProductViewModel, ProductDTO>(product));
+            return RedirectToAction("GetProducts", new { id = product.ShopId });
+        }
+
+        [HttpGet]
+        public IActionResult EditProduct(int id)
+        {
+            ProductDTO productDTO = productService.GetOneById(id);
+
+            IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
+
+            ProductViewModel product = mapper.Map<ProductDTO, ProductViewModel>(productDTO);
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(ProductViewModel product)
+        {
+
+            IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductViewModel, ProductDTO>()).CreateMapper();
+            productService.Update(mapper.Map<ProductViewModel, ProductDTO>(product));
+
+            return RedirectToAction("GetProducts", new { id = product.ShopId });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
